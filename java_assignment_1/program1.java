@@ -1,129 +1,113 @@
 import java.util.Scanner;
 
-// Class for Array Operations
 class ArrayOperations {
-
-    int[] arr;
+    int arr[];
     int n;
 
-    void input(Scanner sc) {
-
-        System.out.print("Enter number of elements: ");
-        n = sc.nextInt();
-
+    // Constructor
+    ArrayOperations(int size) {
+        n = size;
         arr = new int[n];
+    }
 
-        System.out.println("Enter array elements:");
+    // Input array
+    void input() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter " + n + " elements:");
         for (int i = 0; i < n; i++) {
             arr[i] = sc.nextInt();
         }
     }
 
+    // Display array
+    void display() {
+        for (int i = 0; i < n; i++) {
+            System.out.print(arr[i] + " ");
+        }
+        System.out.println();
+    }
+
+    // Reverse array
     void reverse() {
-        System.out.print("Reversed Array: ");
+        System.out.print("Reversed array: ");
         for (int i = n - 1; i >= 0; i--) {
             System.out.print(arr[i] + " ");
         }
         System.out.println();
     }
 
+    // Sort array (Ascending)
     void sort() {
         for (int i = 0; i < n - 1; i++) {
-            for (int j = i + 1; j < n; j++) {
-                if (arr[i] > arr[j]) {
-                    int temp = arr[i];
-                    arr[i] = arr[j];
-                    arr[j] = temp;
+            for (int j = 0; j < n - i - 1; j++) {
+                if (arr[j] > arr[j + 1]) {
+                    int temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
                 }
             }
         }
-
-        System.out.print("Sorted Array: ");
-        for (int i = 0; i < n; i++) {
-            System.out.print(arr[i] + " ");
-        }
-        System.out.println();
+        System.out.print("Sorted array: ");
+        display();
     }
 
+    // Search element
+    void search(int key) {
+        boolean found = false;
+        for (int i = 0; i < n; i++) {
+            if (arr[i] == key) {
+                System.out.println("Element found at position: " + (i + 1));
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            System.out.println("Element not found");
+        }
+    }
+
+    // Average
     void average() {
         int sum = 0;
         for (int i = 0; i < n; i++) {
             sum += arr[i];
         }
-
         double avg = (double) sum / n;
         System.out.println("Average = " + avg);
     }
 
+    // Maximum
     void maximum() {
         int max = arr[0];
-
         for (int i = 1; i < n; i++) {
             if (arr[i] > max) {
                 max = arr[i];
             }
         }
-
-        System.out.println("Maximum element = " + max);
-    }
-
-    void search(int key) {
-        for (int i = 0; i < n; i++) {
-            if (arr[i] == key) {
-                System.out.println("Element found at position: " + (i + 1));
-                return;
-            }
-        }
-        System.out.println("Element not found");
+        System.out.println("Maximum = " + max);
     }
 }
 
-// String Operations
-class StringOperations {
-
-    String str;
-
-    void input(Scanner sc) {
-        sc.nextLine(); // clear buffer
-        System.out.print("Enter a string: ");
-        str = sc.nextLine();
-    }
-
-    void reverse() {
-        String rev = "";
-
-        for (int i = str.length() - 1; i >= 0; i--) {
-            rev = rev + str.charAt(i);
-        }
-
-        System.out.println("Reversed String: " + rev);
-    }
-}
-
-// Main class
-public class Program1 {
-
+public class Main {
     public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
 
-        Scanner sc = new Scanner(System.in); // ONLY ONE SCANNER
+        System.out.print("Enter size of array: ");
+        int size = sc.nextInt();
 
-        ArrayOperations obj1 = new ArrayOperations();
+        ArrayOperations obj = new ArrayOperations(size);
 
-        obj1.input(sc);
-        obj1.reverse();
-        obj1.sort();
-        obj1.average();
-        obj1.maximum();
+        obj.input();
+        obj.display();
+
+        obj.reverse();
+        obj.sort();
 
         System.out.print("Enter element to search: ");
         int key = sc.nextInt();
-        obj1.search(key);
+        obj.search(key);
 
-        StringOperations obj2 = new StringOperations();
-
-        obj2.input(sc);
-        obj2.reverse();
-
-        sc.close(); // CLOSED ONLY ONCE ✔
+        obj.average();
+        obj.maximum();
     }
 }
